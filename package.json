@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amityco/js-sdk": "5.26.0",
+    "@amityco/ui-kit": "^2.14.1",
     "next": "12.2.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "eslint": "8.23.0",
