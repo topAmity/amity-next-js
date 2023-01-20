@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@amityco/js-sdk": "5.26.0",
-    "@amityco/ui-kit": "^2.14.1",
+    "@amityco/js-sdk": "^5.32.0",
+    "@amityco/ts-sdk": "^0.0.1-beta.32",
+    "@meetperry/amity-uikit": "file:../../../Documents/GitHub/amity-uikit",
     "next": "12.2.5",
+    "next-transpile-modules": "^9.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.5"
