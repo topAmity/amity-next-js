@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@amityco/js-sdk": "^5.32.0",
-    "@amityco/ts-sdk": "^0.0.1-beta.32",
-    "@meetperry/amity-uikit": "file:../../../Documents/GitHub/amity-uikit",
+    "@amityco/ui-kit-open-source": "file:../Amity-Social-Cloud-UIKit-Web-OpenSource",
     "next": "12.2.5",
     "next-transpile-modules": "^9.1.0",
     "react": "18.2.0",

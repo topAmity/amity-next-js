@@ -1,16 +1,16 @@
 import AmityClient, { ConnectionStatus, ApiEndpoint } from "@amityco/js-sdk";
 let client;
 function AuthProvider({ children, onConnected }) {
-  const apiKey = "b3babb0b3a89f4341d31dc1a01091edcd70f8de7b23d697f"; // Add your api key here
+  const apiKey = "b0efec52388fa2664b638b1e525a11898500dfb1bc3c6f2d"; // Add your api key here
 
   function login() {
     client = new AmityClient({
       apiKey: apiKey,
-      apiEndpoint: ApiEndpoint.SG,
+      apiEndpoint: ApiEndpoint.EU,
     }); // modify your server region here e.g ApiEndpoint.EU
     client.registerSession({
-      userId: "2.0.5fdfb.220d2824",
-      displayName: "2.0.5fdfb.220d2824",
+      userId: "top",
+      displayName: "top",
     }); // Add your own userId and displayName
     client.on("connectionStatusChanged", ({ newValue }) => {
       if (newValue === ConnectionStatus.Connected) {
