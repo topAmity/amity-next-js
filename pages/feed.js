@@ -38,7 +38,7 @@ export default function Feed({ isConnected, data }) {
   }
   function queryChannelMember() {
     const liveCollection = ChannelRepository.queryMembers({
-      channelId: "63a035d0a00df36d86b7a083",
+      channelId: "64184a06bf75befb74db3a07",
     });
 
     liveCollection.on("dataUpdated", (newModels) => {
@@ -48,9 +48,9 @@ export default function Feed({ isConnected, data }) {
 
   function queryCommunityMember() {
     const members = CommunityRepository.getCommunityMembers({
-      communityId: 'a2399f0ba0834d11f681f5cfa569d33c',
+      communityId: '63dd3435a12d9efc88e17e08',
       sortBy: CommunityUserSortingMethod.displayName,
-      roles: ["community-moderator", "channel-moderator"],
+      // roles: ["community-moderator", "channel-moderator"],
     });
 
     members.on("dataUpdated", (models) => {
@@ -61,6 +61,7 @@ export default function Feed({ isConnected, data }) {
         members.nextPage();
       }
     });
+
   }
   // useEffect(() => {
   //   if(hasMoreData){
