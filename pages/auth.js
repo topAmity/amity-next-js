@@ -9,8 +9,8 @@ function AuthProvider({ children, onConnected }) {
       apiEndpoint: ApiEndpoint.SG,
     }); // modify your server region here e.g ApiEndpoint.EU
     client.registerSession({
-      userId: "2.0.5fdfb.220d2824",
-      displayName: "2.0.5fdfb.220d2824",
+      userId: "top",
+      displayName: "top",
     }); // Add your own userId and displayName
     client.on("connectionStatusChanged", ({ newValue }) => {
       if (newValue === ConnectionStatus.Connected) {
@@ -25,8 +25,16 @@ function AuthProvider({ children, onConnected }) {
   }
 
   function logout(){
-
-    client.unregisterSession();
+    client.on("connectionStatusChanged", ({ newValue }) => {
+      if (newValue === ConnectionStatus.Connected) {
+        console.log("connected to asc");
+        onConnected && onConnected(true);
+      } else {
+        console.log(" not connected to asc");
+        onConnected && onConnected(false);
+      }
+    });
+    // client.unregisterSession();
   }
 
   return (

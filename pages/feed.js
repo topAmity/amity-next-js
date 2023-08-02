@@ -8,7 +8,11 @@ import {
   ChannelRepository,
   ChannelType,
   ChannelFilter,
-  ChannelSortingMethod
+  ChannelSortingMethod,
+  FollowRequestStatus,
+  MemberFilter,
+  AmityUserTokenManager,
+  ApiRegion
 } from "@amityco/js-sdk";
 import { useEffect, useState } from "react";
 
@@ -18,6 +22,7 @@ export default function Feed({ isConnected, data }) {
   const [communityMember, setCommunityMember] = useState();
   console.log("communityMember: ", communityMember);
 
+  
   function queryChannel() {
     // const liveChannel = ChannelRepository.getChannel(
     //   "63a035d0a00df36d86b7a083"
@@ -27,10 +32,12 @@ export default function Feed({ isConnected, data }) {
     //   console.log("data: ", data);
     // });
     const liveCollection = ChannelRepository.queryChannels({
+
       filter: ChannelFilter.Member,
-      sortBy: ChannelSortingMethod.LastCreated
+      sortBy: ChannelSortingMethod.LastCreated,
+
     });
-    
+    console.log('liveCollection: ', liveCollection);
     liveCollection.on('dataUpdated', models => {
       console.log('Channel models: ', models);
      
@@ -38,7 +45,8 @@ export default function Feed({ isConnected, data }) {
   }
   function queryChannelMember() {
     const liveCollection = ChannelRepository.queryMembers({
-      channelId: "64184a06bf75befb74db3a07",
+      channelId: "6421a2f271dfbc6449a99886",
+      memberships: [MemberFilter.Banned],
     });
 
     liveCollection.on("dataUpdated", (newModels) => {
@@ -46,21 +54,39 @@ export default function Feed({ isConnected, data }) {
     });
   }
 
+  let memberCollection;
+  console.log('memberCollection: ', memberCollection);
   function queryCommunityMember() {
     const members = CommunityRepository.getCommunityMembers({
-      communityId: '63dd3435a12d9efc88e17e08',
+      communityId: 'a2399f0ba0834d11f681f5cfa569d33c',
       sortBy: CommunityUserSortingMethod.displayName,
       // roles: ["community-moderator", "channel-moderator"],
     });
-
-    members.on("dataUpdated", (models) => {
+    memberCollection = members
+    memberCollection.on("dataUpdated", (models) => {
       console.log("Members community", models);
     });
-    members.on("loadingStatusChanged", ({ oldValue, newValue }) => {
-      if (members && members.loadingStatus === "loaded" && members.hasMore) {
-        members.nextPage();
-      }
-    });
+
+
+  }
+  function callPrevPage(){
+    if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
+      memberCollection.prevPage();
+    }
+  }
+  function callNextPage(){
+    if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
+      console.log('memberCollection: ', memberCollection);
+      memberCollection.nextPage();
+    }
+    // if(memberCollection){
+    //   memberCollection.on("loadingStatusChanged", ({ oldValue, newValue }) => {
+      
+    //     if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
+    //       memberCollection.nextPage();
+    //     }
+    //   });
+    // }
 
   }
   // useEffect(() => {
@@ -177,6 +203,44 @@ export default function Feed({ isConnected, data }) {
     }
   }, [isConnected]);
 
+  function queryMessageFromChannel(){
+    const liveCollection = MessageRepository.queryMessages({
+      channelId: '633ecbfce0c43d1cad00d65a',
+    });
+    liveCollection.once("dataUpdated", (data) => {
+      console.log("messages", data);
+    });
+  }
+
+  let followListCollection;
+  function getFollowingUsers(){
+    const liveFollowersList = UserRepository.getFollowings(
+      'top',
+      FollowRequestStatus.Accepted,
+    );
+    
+    followListCollection = liveFollowersList
+    console.log('liveFollowersList: ', liveFollowersList);
+    liveFollowersList.once('dataUpdated', data => {
+      console.log('Followers', data);
+    });
+  }
+  function callNextFollowListPage(){
+    followListCollection.nextPage();
+    // if (followListCollection && followListCollection.loadingStatus === "loaded" && followListCollection.hasMore) {
+    //   console.log('followListCollection: ', followListCollection);
+    //   followListCollection.nextPage();
+    // }
+ 
+
+  }
+  async function getAccessToken(){
+ 
+    console.log('accessToken: ');
+    const { accessToken, err } = await AmityUserTokenManager.createUserToken("b3babb0b3a89f4341d31dc1a01091edcd70f8de7b23d697f", ApiRegion.SG, {
+      userId: 'top'
+    });
+  }
   return (
     <div>
       {isConnected ? "Connect Successfully" : "Disconnect"}
@@ -188,6 +252,22 @@ export default function Feed({ isConnected, data }) {
       </button>
       <button onClick={async () => queryCommunityMember()}>
         query community member
+      </button>
+      <button onClick={async () => callNextPage()}>
+        Call next page
+      </button>
+      <button onClick={async () => callPrevPage()}>
+        Call prev page
+      </button>
+      <button onClick={()=> queryMessageFromChannel()}> query Messages</button>
+      <button onClick={async () => getFollowingUsers()}>
+        Following
+      </button>
+      <button onClick={async () => callNextFollowListPage()}>
+        Next page Following
+      </button>
+      <button onClick={async () => getAccessToken()}>
+        Access Token
       </button>
     </div>
   );
