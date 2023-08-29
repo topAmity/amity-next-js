@@ -7,31 +7,7 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@amityco/js-sdk@^5.32.0":
-  version "5.36.0"
-  resolved "https://registry.yarnpkg.com/@amityco/js-sdk/-/js-sdk-5.36.0.tgz#ffb0b357380dfccb4eda243024f70ca9173e73d7"
-  integrity sha512-k7cyyyf8WSy8ayk/8RvCY48Qgr27KwSuXG4/8p+PgFNTzodjAxFesMWxz51Ib75wVlTv3hZnGxkMVhsItb50RQ==
-  dependencies:
-    assert "^2.0.0"
-    buffer "^6.0.3"
-    debug "^4.3.4"
-    eko-flobx "^1.0.5"
-    eventemitter2 "^6.4.8"
-    joi "^17.6.0"
-    joi-objectid "^4.0.2"
-    localforage "^1.7.1"
-    lodash "^4.17.15"
-    mobx "^4.15.7"
-    mqtt "^4.3.7"
-    process "^0.11.10"
-    qs "^6.11.0"
-    querystring-es3 "^0.2.1"
-    socket.io-client "^2.5.0"
-    superagent "^8.0.0"
-    url "^0.11.0"
-    uuid "^8.3.2"
-
-"@amityco/js-sdk@^5.33.0":
+"@amityco/js-sdk@^5.33.0", "@amityco/js-sdk@^5.37.0":
   version "5.37.0"
   resolved "https://registry.yarnpkg.com/@amityco/js-sdk/-/js-sdk-5.37.0.tgz#66f460fbcb8d3c92f300b7572b2a15641886e2f6"
   integrity sha512-VHx7zmfrD6S0cDt98w1VYUcu7xb1SoyFxylKq1kphXyi3mwIT70x4bswSZsKlQyk54piX9sa/Yegbzn0yUDhmQ==
