@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextJS Amity Integration Sample App
 
 ## Getting Started
 
@@ -9,26 +9,39 @@ npm run dev
 # or
 yarn dev
 ```
+### SDK Integration
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+SDK can be implemented inside React component directly without any extra configuration. However, please note that Amity SDK only supports in Clinet side rendering. Can not use inside Server side rendering from NextJS. You can see the code implementation example from this page (https://github.com/topAmity/amity-next-js/blob/main/pages/feed.js)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```
+npm install @amityco/js-sdk
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### UIKit Integration
 
-## Learn More
+To import our UIKit inside NextJS project, please follow our following steps
 
-To learn more about Next.js, take a look at the following resources:
+1. Install Amity Web UIKit
+```
+npm install @amityco/ui-kit
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+2. Install next-transpile-modules (More info: https://www.npmjs.com/package/next-transpile-modules)
+```
+npm install next-transpile-modules
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+3. Add next-transpile-modules config in `next.config.js`(https://github.com/topAmity/amity-next-js/blob/main/next.config.js)
 
-## Deploy on Vercel
+```
+/** @type {import('next').NextConfig} */
+const withTM = require("next-transpile-modules")(["@amityco/ui-kit"]);
+const nextConfig = {
+  reactStrictMode: true,
+};
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+module.exports = withTM(nextConfig);
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+4. Import UIKit component using dynamic import ("next/dynamic") with ssr = false. Please see the UIKit import code example from this page (https://github.com/topAmity/amity-next-js/blob/main/pages/ui-kit.js)
