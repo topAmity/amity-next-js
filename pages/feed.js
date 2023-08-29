@@ -24,13 +24,6 @@ export default function Feed({ isConnected, data }) {
 
 
   function queryChannel() {
-    // const liveChannel = ChannelRepository.getChannel(
-    //   "63a035d0a00df36d86b7a083"
-    // );
-
-    // liveChannel.once("dataUpdated", (data) => {
-    //   console.log("data: ", data);
-    // });
     const liveCollection = ChannelRepository.queryChannels({
 
       filter: ChannelFilter.Member,
@@ -60,7 +53,6 @@ export default function Feed({ isConnected, data }) {
     const members = CommunityRepository.getCommunityMembers({
       communityId: 'a2399f0ba0834d11f681f5cfa569d33c',
       sortBy: CommunityUserSortingMethod.displayName,
-      // roles: ["community-moderator", "channel-moderator"],
     });
     memberCollection = members
     memberCollection.on("dataUpdated", (models) => {
@@ -80,15 +72,7 @@ export default function Feed({ isConnected, data }) {
       memberCollection.nextPage();
     }
 
-  
-    // if(memberCollection){
-    //   memberCollection.on("loadingStatusChanged", ({ oldValue, newValue }) => {
 
-    //     if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
-    //       memberCollection.nextPage();
-    //     }
-    //   });
-    // }
 
   }
   function ReactionQuery(){
@@ -101,11 +85,6 @@ export default function Feed({ isConnected, data }) {
       console.log('Reactions', reactions);
     });
   }
-  // useEffect(() => {
-  //   if(hasMoreData){
-  //     communityMemberCollection.nextPage()
-  //   }
-  // }, [hasMoreData, communityMemberCollection])
 
   function joinChannel() {
     const liveChannel = ChannelRepository.createChannel({
@@ -116,8 +95,6 @@ export default function Feed({ isConnected, data }) {
 
     liveChannel.once("dataUpdated", (model) => {
       console.log("model: ", model);
-      // navigate('/chat/' + model.channelId);
-      // dispatch(connect(model.channelId));
     });
 
     liveChannel.once("dataError", (error) => {
@@ -179,39 +156,10 @@ export default function Feed({ isConnected, data }) {
       console.log("Category", data);
     });
   }
-  async function queryMessage() {
-    // const liveCollection = MessageRepository.queryMessages({
-    //   channelId: "6356aae329c954f31ea80cf8",
-    // });
-    // let messages = liveCollection.models;
-    // liveCollection.on("dataUpdated", (data) => {
-    //   messages = data;
-    //   console.log("messages: ", messages);
-    // });
-    // const isMessageReactionAdded = await MessageRepository.addReaction({
-    //   messageId: "6353b16cf51194e8e3510875",
-    //   reactionName: "love",
-    // });
-    // console.log("isMessageReactionAdded: ", isMessageReactionAdded);
-    // const liveCollection = ReactionRepository.queryReactions({
-    //   referenceId: "6353b16cf51194e8e3510875",
-    //   referenceType: "message",
-    // });
-    // liveCollection.on("dataUpdated", (reactions) => {
-    //   // reactions are successfully fetched
-    //   console.log("Reactions", reactions);
-    // });
-    // const isMessageReactionRemoved = await MessageRepository.removeReaction({
-    //   messageId: "6353b16cf51194e8e3510875",
-    //   reactionName: "Like",
-    // });
-    // console.log("isMessageReactionRemoved: ", isMessageReactionRemoved);
-  }
+
   useEffect(() => {
     if (isConnected) {
-      // queryUser();
       queryChannel();
-      // queryPostData();
     }
   }, [isConnected]);
 
@@ -239,12 +187,6 @@ export default function Feed({ isConnected, data }) {
   }
   function callNextFollowListPage() {
     followListCollection.nextPage();
-    // if (followListCollection && followListCollection.loadingStatus === "loaded" && followListCollection.hasMore) {
-    //   console.log('followListCollection: ', followListCollection);
-    //   followListCollection.nextPage();
-    // }
-
-
   }
   async function getAccessToken() {
 
