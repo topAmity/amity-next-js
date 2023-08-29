@@ -12,7 +12,7 @@ import {
   FollowRequestStatus,
   MemberFilter,
   AmityUserTokenManager,
-  ApiRegion
+  ApiRegion,
 } from "@amityco/js-sdk";
 import { useEffect, useState } from "react";
 
@@ -22,7 +22,7 @@ export default function Feed({ isConnected, data }) {
   const [communityMember, setCommunityMember] = useState();
   console.log("communityMember: ", communityMember);
 
-  
+
   function queryChannel() {
     // const liveChannel = ChannelRepository.getChannel(
     //   "63a035d0a00df36d86b7a083"
@@ -40,7 +40,7 @@ export default function Feed({ isConnected, data }) {
     console.log('liveCollection: ', liveCollection);
     liveCollection.on('dataUpdated', models => {
       console.log('Channel models: ', models);
-     
+
     });
   }
   function queryChannelMember() {
@@ -69,25 +69,37 @@ export default function Feed({ isConnected, data }) {
 
 
   }
-  function callPrevPage(){
+  function callPrevPage() {
     if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
       memberCollection.prevPage();
     }
   }
-  function callNextPage(){
+  function callNextPage() {
     if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
       console.log('memberCollection: ', memberCollection);
       memberCollection.nextPage();
     }
+
+  
     // if(memberCollection){
     //   memberCollection.on("loadingStatusChanged", ({ oldValue, newValue }) => {
-      
+
     //     if (memberCollection && memberCollection.loadingStatus === "loaded" && memberCollection.hasMore) {
     //       memberCollection.nextPage();
     //     }
     //   });
     // }
 
+  }
+  function ReactionQuery(){
+    const liveCollection = ReactionRepository.queryReactions({
+      referenceId: '64ad09df1e04fe812c5868b5',
+      referenceType: 'post',
+    });
+    liveCollection.on('dataUpdated', reactions => {
+      // reactions are successfully fetched
+      console.log('Reactions', reactions);
+    });
   }
   // useEffect(() => {
   //   if(hasMoreData){
@@ -203,7 +215,7 @@ export default function Feed({ isConnected, data }) {
     }
   }, [isConnected]);
 
-  function queryMessageFromChannel(){
+  function queryMessageFromChannel() {
     const liveCollection = MessageRepository.queryMessages({
       channelId: '633ecbfce0c43d1cad00d65a',
     });
@@ -213,34 +225,51 @@ export default function Feed({ isConnected, data }) {
   }
 
   let followListCollection;
-  function getFollowingUsers(){
+  function getFollowingUsers() {
     const liveFollowersList = UserRepository.getFollowings(
       'top',
       FollowRequestStatus.Accepted,
     );
-    
+
     followListCollection = liveFollowersList
     console.log('liveFollowersList: ', liveFollowersList);
     liveFollowersList.once('dataUpdated', data => {
       console.log('Followers', data);
     });
   }
-  function callNextFollowListPage(){
+  function callNextFollowListPage() {
     followListCollection.nextPage();
     // if (followListCollection && followListCollection.loadingStatus === "loaded" && followListCollection.hasMore) {
     //   console.log('followListCollection: ', followListCollection);
     //   followListCollection.nextPage();
     // }
- 
+
 
   }
-  async function getAccessToken(){
- 
+  async function getAccessToken() {
+
     console.log('accessToken: ');
     const { accessToken, err } = await AmityUserTokenManager.createUserToken("b3babb0b3a89f4341d31dc1a01091edcd70f8de7b23d697f", ApiRegion.SG, {
       userId: 'top'
     });
   }
+
+  let reactionLiveCollection;
+
+  function getReactions() {
+
+    const liveCollection = ReactionRepository.queryReactions({
+      referenceId: '64be2bda27d3baed6af040e1',
+      referenceType: 'post',
+      r
+    });
+    liveCollection.on('dataUpdated', reactions => {
+      // reactions are successfully fetched
+      console.log('Reactions', reactions);
+    });
+  }
+
+  
   return (
     <div>
       {isConnected ? "Connect Successfully" : "Disconnect"}
@@ -259,7 +288,7 @@ export default function Feed({ isConnected, data }) {
       <button onClick={async () => callPrevPage()}>
         Call prev page
       </button>
-      <button onClick={()=> queryMessageFromChannel()}> query Messages</button>
+      <button onClick={() => queryMessageFromChannel()}> query Messages</button>
       <button onClick={async () => getFollowingUsers()}>
         Following
       </button>
@@ -268,6 +297,9 @@ export default function Feed({ isConnected, data }) {
       </button>
       <button onClick={async () => getAccessToken()}>
         Access Token
+      </button>
+      <button onClick={async () => getReactions()}>
+      Get Reactions
       </button>
     </div>
   );

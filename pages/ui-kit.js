@@ -5,19 +5,19 @@ import { useState } from "react";
 
 // import { AmityUiKitProvider, AmityUiKitSocial } from "@amityco/ui-kit";
 const AmityUiKitProvider = dynamic(
-  () => import("@amityco/ui-kit-open-source").then((mod) => mod.AmityUiKitProvider),
+  () => import("@amityco/ui-kit").then((mod) => mod.AmityUiKitProvider),
   {
     ssr: false,
   }
 );
 const AmityUiKitSocial = dynamic(
-  () => import("@amityco/ui-kit-open-source").then((mod) => mod.AmityUiKitSocial),
+  () => import("@amityco/ui-kit").then((mod) => mod.AmityUiKitSocial),
   {
     ssr: false,
   }
 );
 const AmityUiKitChat = dynamic(
-  () => import("@amityco/ui-kit-open-source").then((mod) => mod.AmityUiKitChat),
+  () => import("@amityco/ui-kit").then((mod) => mod.AmityUiKitChat),
   {
     ssr: false,
   }
